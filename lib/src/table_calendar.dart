@@ -18,6 +18,7 @@ import 'widgets/cell_content.dart';
 
 class CustomRange extends DateTimeRange {
   final String id;
+  final int? rowId;
 
   /// The start of the range of dates.
   final DateTime start;
@@ -25,7 +26,8 @@ class CustomRange extends DateTimeRange {
   /// The end of the range of dates.
   final DateTime end;
 
-  CustomRange({required this.id, required this.start, required this.end})
+  CustomRange(
+      {required this.id, this.rowId, required this.start, required this.end})
       : super(start: start, end: end);
 }
 

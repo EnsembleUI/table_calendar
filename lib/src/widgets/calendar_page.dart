@@ -260,6 +260,21 @@ class CalendarPage extends StatelessWidget {
 
     for (int i = 0; i < overlapGroups.length; i++) {
       final group = overlapGroups[i];
+      bool isDefault(InternalRange item) => item.isDefault;
+      int? getRowId(InternalRange item) => item.originalRange.rowId;
+
+      group.sort((a, b) {
+        if (isDefault(a) || isDefault(b)) {
+          return isDefault(a) ? 1 : -1;
+        }
+
+        if (getRowId(a) == null || getRowId(b) == null) {
+          return getRowId(a) == null ? 1 : -1;
+        }
+
+        return getRowId(a)!.compareTo(getRowId(b)!);
+      });
+
       for (int j = 0; j < group.length; j++) {
         final range = group[j];
         if (range.isDefault) {
