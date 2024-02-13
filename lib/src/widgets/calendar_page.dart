@@ -260,21 +260,6 @@ class CalendarPage extends StatelessWidget {
 
     for (int i = 0; i < overlapGroups.length; i++) {
       final group = overlapGroups[i];
-      bool isDefault(InternalRange item) => item.isDefault;
-      int? getRowId(InternalRange item) => item.originalRange.rowId;
-
-      group.sort((a, b) {
-        if (isDefault(a) || isDefault(b)) {
-          return isDefault(a) ? 1 : -1;
-        }
-
-        if (getRowId(a) == null || getRowId(b) == null) {
-          return getRowId(a) == null ? 1 : -1;
-        }
-
-        return getRowId(a)!.compareTo(getRowId(b)!);
-      });
-
       for (int j = 0; j < group.length; j++) {
         final range = group[j];
         if (range.isDefault) {
@@ -440,6 +425,7 @@ class CalendarLayoutDelegate extends MultiChildLayoutDelegate {
       final group = overlapGroups[i];
       double sharedHeight =
           (rowHeight - topMargin) / (spanPerRow ?? group.length);
+      double height = (rowHeight - topMargin) / (spanPerRow ?? group.length);
 
       double sharedYOffset = 0;
       for (var j = 0; j < group.length; j++) {
@@ -453,6 +439,12 @@ class CalendarLayoutDelegate extends MultiChildLayoutDelegate {
                 sharedYOffset +
                 topMargin;
 
+        if (spanPerRow != null &&
+            !(range.originalRange.rowId == null ||
+                range.originalRange.rowId == 1)) {
+          yOffset += (range.originalRange.rowId! - 1) * height;
+        }
+
         double widgetWidth =
             getWidgetWidth(startDate, endDate, constraints.maxWidth / 7);
 
@@ -461,7 +453,9 @@ class CalendarLayoutDelegate extends MultiChildLayoutDelegate {
 
         positionChild((i + j).toString() + range.newRange.toString(),
             Offset(xOffset, yOffset));
-        sharedYOffset += sharedHeight;
+        if (spanPerRow == null) {
+          sharedYOffset += sharedHeight;
+        }
       }
     }
   }
