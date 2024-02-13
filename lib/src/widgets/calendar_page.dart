@@ -300,6 +300,7 @@ class CalendarPage extends StatelessWidget {
         visibleDays: visibleDays,
         overlapGroups: overlapGroups,
         topMargin: topMargin,
+        spanPerRow: rowSpanLimit == -1 ? null : rowSpanLimit,
       ),
       children: children,
     );
@@ -422,6 +423,7 @@ class CalendarLayoutDelegate extends MultiChildLayoutDelegate {
   final List<DateTime> visibleDays;
   final List<List<InternalRange>> overlapGroups;
   final int topMargin;
+  final int? spanPerRow;
 
   CalendarLayoutDelegate({
     required this.constraints,
@@ -429,13 +431,15 @@ class CalendarLayoutDelegate extends MultiChildLayoutDelegate {
     required this.visibleDays,
     required this.overlapGroups,
     required this.topMargin,
+    required this.spanPerRow,
   });
 
   @override
   void performLayout(Size size) {
     for (int i = 0; i < overlapGroups.length; i++) {
       final group = overlapGroups[i];
-      double sharedHeight = (rowHeight - topMargin) / group.length;
+      double sharedHeight =
+          (rowHeight - topMargin) / (spanPerRow ?? group.length);
 
       double sharedYOffset = 0;
       for (var j = 0; j < group.length; j++) {
