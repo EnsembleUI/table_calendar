@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
 
-import 'package:table_calendar/table_calendar.dart';
-import 'package:collection/collection.dart';
+import 'package:ensemble_table_calendar/src/table_calendar.dart';
 
 class CalendarPage extends StatelessWidget {
   final Widget Function(BuildContext context, CustomRange range)?

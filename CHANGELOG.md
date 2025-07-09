@@ -1,3 +1,17 @@
+## [3.1.0] - Fork Release
+
+* **BREAKING**: Package renamed from `table_calendar` to `ensemble_table_calendar`
+* **NEW**: Added CustomRange support with overlay functionality
+* **NEW**: Added tooltip support with customizable styling and positioning
+* **NEW**: Added `markedDayPredicate` for enhanced day marking capabilities
+* **NEW**: Added `rowSpanLimit` for better row control
+* **NEW**: Added `topMargin` property for layout customization
+* **NEW**: Added overlay builders (`overlayBuilder`, `overlayDefaultBuilder`)
+* **IMPROVED**: Enhanced SDK version constraint to support newer Flutter versions
+* **IMPROVED**: Added collection dependency for better compatibility
+* **IMPROVED**: Comprehensive documentation and examples for new features
+* This is a maintained fork of the original table_calendar package with additional features and regular updates
+
 ## [3.0.9]
 
 * Updated intl version to 0.18.0
