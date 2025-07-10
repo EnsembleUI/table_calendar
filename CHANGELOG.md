@@ -1,3 +1,8 @@
+
+## [3.1.1]
+
+* **FIX**: Corrected URLs in pubspec.yaml to use correct case for EnsembleUI
+
 ## [3.1.0] - Fork Release
 
 * **BREAKING**: Package renamed from `table_calendar` to `ensemble_table_calendar`
