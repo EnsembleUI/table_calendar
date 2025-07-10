@@ -1,10 +1,10 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-import 'package:flutter/widgets.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter/material.dart';
 
-import '../shared/utils.dart' show DayBuilder, FocusedDayBuilder;
+import '../shared/utils.dart'
+    show DayBuilder, FocusedDayBuilder, OverlayBuilder, OverlayDefaultBuilder;
 
 /// Signature for a function that creates a single event marker for a given `day`.
 /// Contains a single `event` associated with that `day`.

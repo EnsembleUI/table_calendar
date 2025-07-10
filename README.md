@@ -1,9 +1,17 @@
-# TableCalendar
+# Ensemble TableCalendar
 
-[![Pub Package](https://img.shields.io/pub/v/table_calendar.svg?style=flat-square)](https://pub.dartlang.org/packages/table_calendar)
+[![Pub Package](https://img.shields.io/pub/v/ensemble_table_calendar.svg?style=flat-square)](https://pub.dartlang.org/packages/ensemble_table_calendar)
 [![Awesome Flutter](https://img.shields.io/badge/Awesome-Flutter-52bdeb.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
-Highly customizable, feature-packed calendar widget for Flutter.
+A highly customizable, feature-packed calendar widget for Flutter with enhanced functionality. This is a maintained fork of the original `table_calendar` package with additional features including overlay ranges, tooltips, and enhanced marking capabilities.
+
+## ⭐ New Features in Plus Version
+
+- **CustomRange Support**: Display custom overlay ranges on the calendar with ID and row ID support
+- **Tooltip Functionality**: Add tooltips to calendar days with customizable styling
+- **Enhanced Marking**: Advanced day marking capabilities with `markedDayPredicate`
+- **Row Span Control**: Additional control over calendar row spanning
+- **Maintained Updates**: Regular updates and bug fixes for the latest Flutter versions
 
 | ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/table_calendar_styles.gif) | ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/table_calendar_builders.gif) |
 | :------------: | :------------: |
@@ -11,6 +19,7 @@ Highly customizable, feature-packed calendar widget for Flutter.
 
 ## Features
 
+* All original table_calendar features plus enhanced functionality
 * Extensive, yet easy to use API
 * Preconfigured UI with customizable styling
 * Custom selective builders for unlimited UI design
@@ -21,10 +30,30 @@ Highly customizable, feature-packed calendar widget for Flutter.
 * Vertical autosizing - fit the content, or fill the viewport
 * Multiple calendar formats (month, two weeks, week)
 * Horizontal swipe boundaries (first day, last day)
+* **NEW**: Custom overlay ranges with ID support
+* **NEW**: Tooltip functionality with customizable styling
+* **NEW**: Enhanced day marking capabilities
+
+## Migration from table_calendar
+
+If you're migrating from the original `table_calendar` package, simply update your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  ensemble_table_calendar: ^3.1.0  # instead of table_calendar
+```
+
+Then update your imports:
+
+```dart
+import 'package:ensemble_table_calendar/ensemble_table_calendar.dart';  // instead of package:table_calendar/table_calendar.dart
+```
+
+All existing APIs remain compatible, with additional features available as optional parameters.
 
 ## Usage
 
-Make sure to check out [examples](https://github.com/aleksanderwozniak/table_calendar/tree/master/example/lib/pages) and [API docs](https://pub.dev/documentation/table_calendar/latest/) for more details.
+Make sure to check out the [examples](https://github.com/ensembleUI/table_calendar/tree/master/example/lib/pages) for more details.
 
 ### Installation
 
@@ -32,12 +61,10 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  table_calendar: ^3.0.9
+  ensemble_table_calendar: ^3.1.0
 ```
 
 ### Basic setup
-
-*The complete example is available [here](https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/basics_example.dart).*
 
 **TableCalendar** requires you to provide `firstDay`, `lastDay` and `focusedDay`:
 * `firstDay` is the first available day for the calendar. Users will not be able to access days before it.
@@ -49,6 +76,68 @@ TableCalendar(
   firstDay: DateTime.utc(2010, 10, 16),
   lastDay: DateTime.utc(2030, 3, 14),
   focusedDay: DateTime.now(),
+);
+```
+
+### New Features Usage
+
+#### Custom Overlay Ranges
+
+```dart
+TableCalendar(
+  firstDay: DateTime.utc(2010, 10, 16),
+  lastDay: DateTime.utc(2030, 3, 14),
+  focusedDay: DateTime.now(),
+  overlayRanges: [
+    CustomRange(
+      id: 'vacation',
+      start: DateTime.now(),
+      end: DateTime.now().add(Duration(days: 7)),
+      rowId: 1,
+    ),
+  ],
+  calendarBuilders: CalendarBuilders(
+    overlayBuilder: (context, range) {
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.blue.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(range.id),
+        ),
+      );
+    },
+  ),
+);
+```
+
+#### Tooltip Support
+
+```dart
+TableCalendar(
+  firstDay: DateTime.utc(2010, 10, 16),
+  lastDay: DateTime.utc(2030, 3, 14),
+  focusedDay: DateTime.now(),
+  showTooltip: true,
+  toolTip: 'Custom tooltip text',
+  toolTipDate: DateTime.now(),
+  toolTipStyle: TextStyle(color: Colors.white),
+  toolTipBackgroundColor: Colors.black87,
+);
+```
+
+#### Enhanced Day Marking
+
+```dart
+TableCalendar(
+  firstDay: DateTime.utc(2010, 10, 16),
+  lastDay: DateTime.utc(2030, 3, 14),
+  focusedDay: DateTime.now(),
+  markedDayPredicate: (day) {
+    // Mark specific days with custom logic
+    return day.weekday == DateTime.friday;
+  },
 );
 ```
 
@@ -97,11 +186,7 @@ onPageChanged: (focusedDay) {
 
 It is worth noting that you don't need to call `setState()` inside `onPageChanged()` callback. You should just update the stored value, so that if the widget gets rebuilt later on, it will use the proper `focusedDay`.
 
-*The complete example is available [here](https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/basics_example.dart). You can find other examples [here](https://github.com/aleksanderwozniak/table_calendar/tree/master/example/lib/pages).*
-
 ### Events
-
-*The complete example is available [here](https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/events_example.dart).*
 
 You can supply custom events to **TableCalendar** widget. To do so, use `eventLoader` property - you will be given a `DateTime` object, to which you need to assign a list of events.
 
@@ -160,11 +245,9 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
 }
 ```
 
-*The complete example is available [here](https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/events_example.dart).*
-
 ### Custom UI with CalendarBuilders
 
-To customize the UI with your own widgets, use [CalendarBuilders](https://pub.dev/documentation/table_calendar/latest/table_calendar/CalendarBuilders-class.html). Each builder can be used to selectively override the UI, allowing you to implement highly specific designs with minimal hassle.
+To customize the UI with your own widgets, use [CalendarBuilders](https://pub.dev/documentation/table_calendar_plus/latest/table_calendar_plus/CalendarBuilders-class.html). Each builder can be used to selectively override the UI, allowing you to implement highly specific designs with minimal hassle.
 
 You can return `null` from any builder to use the default style. For example, the following snippet will override only the Sunday's day of the week label (Sun), leaving other dow labels unchanged:
 
@@ -206,24 +289,28 @@ void main() {
 }
 ```
 
-After those two steps your app should be ready to use **TableCalendar** with different languages.
+#### Specifying locale
 
-#### Specifying a language
-
-To specify a language, simply pass it as a String code to `locale` property.
-
-For example, this will make **TableCalendar** use Polish language:
+To specify a locale, simply pass it to `TableCalendar`'s constructor:
 
 ```dart
 TableCalendar(
   locale: 'pl_PL',
+  // ...
 ),
 ```
 
-| ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/en_US.png) | ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/pl_PL.png) | ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/fr_FR.png) | ![Image](https://raw.githubusercontent.com/aleksanderwozniak/table_calendar/assets/zh_CN.png) |
 | :------------: | :------------: | :------------: | :------------: |
-| `'en_US'` | `'pl_PL'` | `'fr_FR'` | `'zh_CN'` |
+| **en_US** | **pl_PL** | **fr_FR** | **zh_CN** |
 
-Note, that if you want to change the language of `FormatButton`'s text, you have to do this yourself. Use `availableCalendarFormats` property and pass the translated Strings there. Use i18n method of your choice.
+## Original Credits
 
-You can also hide the button altogether by setting `formatButtonVisible` to false.
+This package is a maintained fork of the original [table_calendar](https://github.com/aleksanderwozniak/table_calendar) created by Aleksander Woźniak. We extend our gratitude to the original author and contributors for their excellent work.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

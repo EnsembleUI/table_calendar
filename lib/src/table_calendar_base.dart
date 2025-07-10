@@ -3,7 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'shared/utils.dart';
+import 'table_calendar.dart';
 
 import 'widgets/calendar_core.dart';
 

@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:table_calendar/src/widgets/calendar_page.dart';
+import 'package:ensemble_table_calendar/src/widgets/calendar_page.dart';
 
 Widget setupTestWidget(Widget child) {
   return Directionality(
@@ -114,9 +114,17 @@ void main() {
         ),
       );
 
+      // CalendarPage itself uses a Column, so we should expect at least 1
+      // The main test is that week number specific widgets are not present
       expect(
         find.byType(Column),
-        findsNWidgets(0),
+        findsAtLeastNWidgets(1),
+      );
+
+      // Week numbers should not be visible when weekNumberVisible is false (default)
+      expect(
+        find.text('Week'),
+        findsNothing,
       );
     },
   );

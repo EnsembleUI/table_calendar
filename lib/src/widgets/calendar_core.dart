@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:ensemble_table_calendar/src/shared/utils.dart';
+import 'package:ensemble_table_calendar/src/table_calendar.dart';
 
 import 'calendar_page.dart';
 

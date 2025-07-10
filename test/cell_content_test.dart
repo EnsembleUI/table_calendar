@@ -1,10 +1,10 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:ensemble_table_calendar/src/widgets/cell_content.dart';
+import 'package:ensemble_table_calendar/ensemble_table_calendar.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:table_calendar/src/widgets/cell_content.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 Widget setupTestWidget(
   DateTime cellDay, {
